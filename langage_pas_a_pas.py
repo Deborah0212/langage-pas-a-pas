@@ -5438,24 +5438,27 @@ niveau = st.selectbox("Choisir le niveau", ["léger", "modéré", "sévère"])
 if st.button("Générer programme"):
     prog = programme_lecture(niveau)
 
-    st.subheader("📚 Programme généré")
+    st.success("Programme généré ✔️")
 
-    for lettre in prog["lettres"]:
-        st.write(f"🔤 {lettre['lettre']} → {lettre['son']}")
+    st.markdown("## 🔤 Lettres et sons")
+    cols = st.columns(4)
+
+    for i, lettre in enumerate(prog["lettres"]):
+        cols[i % 4].markdown(f"**{lettre['lettre']}** → {lettre['son']}")
 
     st.markdown("---")
 
-    st.subheader("🔡 Syllabes")
+    st.markdown("## 🔡 Syllabes")
     st.write(", ".join(prog["syllabes"]))
 
     st.markdown("---")
 
-    st.subheader("🧩 Mots")
+    st.markdown("## 🧩 Mots")
     st.write(", ".join(prog["mots"]))
 
     st.markdown("---")
 
-    st.subheader("🗣 Phrases")
+    st.markdown("## 🗣 Phrases")
 
     for phrase in prog["phrases"]:
-        st.write(f"• {phrase}")
+        st.markdown(f"• {phrase}")
