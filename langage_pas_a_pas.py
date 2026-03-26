@@ -2575,11 +2575,15 @@ def render():
             index=fichiers.index(st.session_state["prenom_actif"])
         )
 
-        if prenom_selection != st.session_state["prenom_actif"]:
-            st.session_state["prenom_actif"] = prenom_selection
-            st.session_state["lp_data"] = charger(prenom_selection)
-            st.rerun()
+        prenom_selection = st.selectbox(
+            "Profil enfant",
+            fichiers,
+            index=fichiers.index(st.session_state["prenom_actif"])
+        )
 
+# 🔥 TOUJOURS charger les données
+st.session_state["prenom_actif"] = prenom_selection
+st.session_state["lp_data"] = charger(prenom_selection)
     # et on récupère data après sélection
     data = st.session_state.get("lp_data", {}) or {}
 
