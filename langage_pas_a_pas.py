@@ -5423,3 +5423,88 @@ l’évaluation réalisée par un professionnel de santé.
                     file_name="conseils.pdf",
                     mime="application/pdf"
                 )
+
+# =========================
+# 🌸 LANCEMENT INTERFACE PRINCIPALE
+# =========================
+
+st.set_page_config(page_title="Langage Pas à Pas", layout="wide")
+
+st.markdown("# 🌸 Langage Pas à Pas")
+st.markdown("### Programme éducatif complet")
+
+# 👉 ON AFFICHE TON VRAI LOGICIEL
+
+tabs = st.tabs([
+    "🏠 Accueil",
+    "👶 Profil",
+    "📊 Évaluation",
+    "🔍 Analyse",
+    "📘 Programme",
+    "📈 Suivi",
+    "📊 Tableau de bord",
+    "💡 Conseils",
+    "📖 Lecture"
+])
+
+# =========================
+# 🏠 ACCUEIL
+# =========================
+with tabs[0]:
+    st.success("Bienvenue dans ton logiciel")
+
+# =========================
+# 👶 PROFIL
+# =========================
+with tabs[1]:
+    prenom = st.text_input("Prénom enfant")
+
+    if st.button("Créer profil"):
+        data = {"profil": {"prenom": prenom}}
+        sauvegarder(data, prenom)
+        st.success("Profil créé")
+
+    profils = lister_profils()
+    if profils:
+        st.write("Profils existants :", profils)
+
+# =========================
+# 📘 PROGRAMME
+# =========================
+with tabs[4]:
+    niveau = st.selectbox("Niveau", ["léger", "modéré", "sévère"])
+
+    if st.button("Générer programme"):
+        prog = programme_lecture(niveau)
+
+        st.subheader("Lettres")
+        for l in prog["lettres"]:
+            st.write(f"{l['lettre']} → {l['son']}")
+
+        st.subheader("Syllabes")
+        st.write(", ".join(prog["syllabes"]))
+
+        st.subheader("Mots")
+        st.write(", ".join(prog["mots"]))
+
+        st.subheader("Phrases")
+        for p in prog["phrases"]:
+            st.write(p)
+
+# =========================
+# 💡 CONSEILS
+# =========================
+with tabs[7]:
+    st.markdown("### Conseils parents")
+    st.write("5 minutes par jour, répéter, encourager...")
+
+# =========================
+# 📖 LECTURE
+# =========================
+with tabs[8]:
+    niveau = st.selectbox("Niveau lecture", ["léger", "modéré", "sévère"])
+
+    if st.button("Lancer lecture"):
+        prog = programme_lecture(niveau)
+        for p in prog["phrases"]:
+            st.write(p)
