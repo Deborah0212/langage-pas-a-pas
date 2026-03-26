@@ -1,5 +1,4 @@
 import streamlit as st
-try:
 from datetime import datetime
 import json
 import pandas as pd
@@ -5425,5 +5424,4 @@ l’évaluation réalisée par un professionnel de santé.
                     mime="application/pdf"
                 )
     
-                except Exception as e:
-                    st.error(f"Erreur : {e}")
+
