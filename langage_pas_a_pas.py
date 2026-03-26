@@ -2583,7 +2583,6 @@ def render():
     # ==============================
     # TABS
     # ==============================
-    st.write("DEBUG OK")
 
     tabs = st.tabs([
         "🏠 Accueil",
@@ -5432,3 +5431,9 @@ l’évaluation réalisée par un professionnel de santé.
 st.set_page_config(page_title="Langage Pas à Pas", layout="wide")
 
 st.title("🌸 Langage Pas à Pas")
+
+# =========================
+# 🚀 LANCEMENT APP
+# =========================
+
+render()
