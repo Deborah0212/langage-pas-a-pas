@@ -2572,13 +2572,8 @@ def render():
         prenom_selection = st.selectbox(
             "Profil enfant",
             fichiers,
-            index=fichiers.index(st.session_state["prenom_actif"])
-        )
-
-        prenom_selection = st.selectbox(
-            "Profil enfant",
-            fichiers,
-            index=fichiers.index(st.session_state["prenom_actif"])
+            index=fichiers.index(st.session_state["prenom_actif"]),
+            key="select_profil_unique"
         )
 
     # 🔥 TOUJOURS charger les données
