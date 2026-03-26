@@ -5430,55 +5430,79 @@ l’évaluation réalisée par un professionnel de santé.
                 )
 
 # =========================
-# INTERFACE PRO
+# 🌸 INTERFACE COMPLETE LOGICIEL
 # =========================
 
 st.set_page_config(page_title="Langage Pas à Pas", layout="wide")
 
-st.markdown("""
-<style>
-.stApp {
-    background-color: #fffaf7;
-}
-h1, h2, h3 {
-    color: #5c4b51;
-}
-.stButton>button {
-    background-color: #f8c8dc;
-    color: black;
-    border-radius: 10px;
-    padding: 10px;
-}
-</style>
-""", unsafe_allow_html=True)
-
 st.markdown("# 🌸 Langage Pas à Pas")
-st.markdown("### Programme éducatif complet (Langage / Lecture / TDA)")
+st.markdown("### Logiciel complet de stimulation du langage")
 
-niveau = st.selectbox("Choisir le niveau", ["léger", "modéré", "sévère"])
+menu = st.tabs([
+    "🏠 Accueil",
+    "📖 Lecture",
+    "🧠 Exercices",
+    "📊 Suivi",
+    "📄 PDF"
+])
 
-if st.button("Générer programme"):
-    prog = programme_lecture(niveau)
+# 🏠 ACCUEIL
+with menu[0]:
+    st.write("Bienvenue dans le logiciel Langage Pas à Pas")
+    st.write("Choisissez une section pour commencer")
 
-    st.success("Programme généré ✔️")
+# 📖 LECTURE
+with menu[1]:
+    niveau = st.selectbox("Choisir le niveau", ["léger", "modéré", "sévère"])
 
-    tab1, tab2, tab3, tab4 = st.tabs(["🔤 Lettres", "🔡 Syllabes", "🧩 Mots", "🗣 Phrases"])
+    if st.button("Générer programme lecture"):
+        prog = programme_lecture(niveau)
 
-    with tab1:
-        st.subheader("Lettres et sons")
-        cols = st.columns(5)
-        for i, lettre in enumerate(prog["lettres"]):
-            cols[i % 5].markdown(f"**{lettre['lettre']}** → {lettre['son']}")
+        st.subheader("Lettres")
+        for l in prog["lettres"]:
+            st.write(f"{l['lettre']} → {l['son']}")
 
-    with tab2:
         st.subheader("Syllabes")
         st.write(", ".join(prog["syllabes"]))
 
-    with tab3:
         st.subheader("Mots")
         st.write(", ".join(prog["mots"]))
 
-    with tab4:
         st.subheader("Phrases")
-        for phrase in prog["phrases"]:
-            st.markdown(f"• {phrase}")
+        for p in prog["phrases"]:
+            st.write(f"• {p}")
+
+# 🧠 EXERCICES
+with menu[2]:
+    st.subheader("Exercices personnalisés")
+
+    niveau = st.selectbox("Niveau", ["retard sévère", "retard modéré", "retard léger"])
+
+    semaine = st.slider("Semaine", 1, 24, 1)
+
+    if st.button("Générer exercices"):
+        data = {"profil": {"prenom": "enfant"}}
+        exos = choisir_exercices_semaine(data, niveau, semaine)
+
+        for e in exos:
+            st.write(e)
+
+# 📊 SUIVI
+with menu[3]:
+    st.subheader("Suivi enfant")
+    st.write("Fonction de suivi active (à compléter si besoin)")
+
+# 📄 PDF
+with menu[4]:
+    st.subheader("Génération PDF")
+
+    if st.button("Créer PDF lecture"):
+        prog = programme_lecture("modéré")
+        pdf = generer_pdf_lecture(prog)
+
+        st.download_button(
+            label="Télécharger PDF",
+            data=pdf,
+            file_name="programme.pdf",
+            mime="application/pdf"
+        )
