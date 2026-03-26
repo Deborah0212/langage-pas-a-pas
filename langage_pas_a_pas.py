@@ -2583,6 +2583,7 @@ def render():
     # ==============================
     # TABS
     # ==============================
+    st.write("DEBUG OK")
 
     tabs = st.tabs([
         "🏠 Accueil",
