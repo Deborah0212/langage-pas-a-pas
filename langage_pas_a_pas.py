@@ -2585,7 +2585,7 @@ def render():
 st.session_state["prenom_actif"] = prenom_selection
 st.session_state["lp_data"] = charger(prenom_selection)
     # et on récupère data après sélection
-    data = st.session_state.get("lp_data", {}) or {}
+data = st.session_state.get("lp_data", {}) or {}
 
     # ==============================
     # TABS
