@@ -3,7 +3,7 @@ import streamlit as st
 st.title("APP OK")
 st.write("L'application démarre")
 
-st.stop()
+# st.stop()
 from datetime import datetime
 import json
 import pandas as pd
