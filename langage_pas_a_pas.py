@@ -2512,7 +2512,11 @@ def render():
 
     with col2:
         if os.path.exists("langage_pas_a_pas.png"):
-            st.image("langage_pas_a_pas.png", width=500)
+            col1, col2 = st.columns([1, 2])
+            
+            with col2:
+                st.image("langage_pas_a_pas.png", width=400)
+    
         else:
             st.warning("Logo non trouvé")
 
