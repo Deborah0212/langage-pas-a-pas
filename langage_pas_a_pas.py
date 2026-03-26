@@ -5429,4 +5429,12 @@ l’évaluation réalisée par un professionnel de santé.
                     mime="application/pdf"
                 )
     
+st.header("Langage Pas à Pas")
 
+st.write("Bienvenue dans le programme")
+
+niveau = st.selectbox("Choisir le niveau", ["léger", "modéré", "sévère"])
+
+if st.button("Générer programme"):
+    prog = programme_lecture(niveau)
+    st.write(prog)
