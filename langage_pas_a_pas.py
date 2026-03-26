@@ -1,6 +1,4 @@
 import streamlit as st
-st.title("TEST OK")
-st.write("Si tu vois ça → ton app fonctionne")
 from datetime import datetime
 import json
 import pandas as pd
