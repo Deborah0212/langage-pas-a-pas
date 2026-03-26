@@ -5430,79 +5430,73 @@ l’évaluation réalisée par un professionnel de santé.
                 )
 
 # =========================
-# 🌸 INTERFACE COMPLETE LOGICIEL
+# 🌸 INTERFACE SIMPLE PROPRE
 # =========================
+
+import streamlit as st
 
 st.set_page_config(page_title="Langage Pas à Pas", layout="wide")
 
-st.markdown("# 🌸 Langage Pas à Pas")
-st.markdown("### Logiciel complet de stimulation du langage")
+st.title("🌸 Langage Pas à Pas")
+st.write("Logiciel complet langage et lecture")
 
-menu = st.tabs([
-    "🏠 Accueil",
-    "📖 Lecture",
-    "🧠 Exercices",
-    "📊 Suivi",
-    "📄 PDF"
-])
+menu = st.radio(
+    "Menu",
+    ["Accueil", "Lecture", "Exercices", "Suivi", "PDF"]
+)
 
-# 🏠 ACCUEIL
-with menu[0]:
-    st.write("Bienvenue dans le logiciel Langage Pas à Pas")
-    st.write("Choisissez une section pour commencer")
+# ACCUEIL
+if menu == "Accueil":
+    st.success("Logiciel prêt ✔️")
 
-# 📖 LECTURE
-with menu[1]:
-    niveau = st.selectbox("Choisir le niveau", ["léger", "modéré", "sévère"])
+# LECTURE
+elif menu == "Lecture":
+    niveau = st.selectbox("Niveau", ["leger", "modere", "severe"])
 
-    if st.button("Générer programme lecture"):
+    if st.button("Générer programme"):
         prog = programme_lecture(niveau)
 
-        st.subheader("Lettres")
+        st.write("### Lettres")
         for l in prog["lettres"]:
             st.write(f"{l['lettre']} → {l['son']}")
 
-        st.subheader("Syllabes")
+        st.write("### Syllabes")
         st.write(", ".join(prog["syllabes"]))
 
-        st.subheader("Mots")
+        st.write("### Mots")
         st.write(", ".join(prog["mots"]))
 
-        st.subheader("Phrases")
+        st.write("### Phrases")
         for p in prog["phrases"]:
-            st.write(f"• {p}")
+            st.write(p)
 
-# 🧠 EXERCICES
-with menu[2]:
-    st.subheader("Exercices personnalisés")
-
-    niveau = st.selectbox("Niveau", ["retard sévère", "retard modéré", "retard léger"])
-
+# EXERCICES
+elif menu == "Exercices":
+    niveau = st.selectbox("Niveau enfant", ["retard sévère", "retard modéré", "retard léger"])
     semaine = st.slider("Semaine", 1, 24, 1)
 
     if st.button("Générer exercices"):
         data = {"profil": {"prenom": "enfant"}}
         exos = choisir_exercices_semaine(data, niveau, semaine)
 
-        for e in exos:
-            st.write(e)
+        for ex in exos:
+            fiche = fiche_exercice(ex)
+            st.write("###", ex)
+            st.write(fiche["objectif"])
 
-# 📊 SUIVI
-with menu[3]:
-    st.subheader("Suivi enfant")
-    st.write("Fonction de suivi active (à compléter si besoin)")
+# SUIVI
+elif menu == "Suivi":
+    prenom = st.text_input("Prénom")
 
-# 📄 PDF
-with menu[4]:
-    st.subheader("Génération PDF")
+    if st.button("Créer profil"):
+        data = {"profil": {"prenom": prenom}}
+        sauvegarder(data, prenom)
+        st.success("Profil créé")
 
-    if st.button("Créer PDF lecture"):
-        prog = programme_lecture("modéré")
+# PDF
+elif menu == "PDF":
+    if st.button("Télécharger PDF"):
+        prog = programme_lecture("modere")
         pdf = generer_pdf_lecture(prog)
 
-        st.download_button(
-            label="Télécharger PDF",
-            data=pdf,
-            file_name="programme.pdf",
-            mime="application/pdf"
-        )
+        st.download_button("Télécharger", pdf, "programme.pdf")
