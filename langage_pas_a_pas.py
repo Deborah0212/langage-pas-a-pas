@@ -5428,10 +5428,32 @@ l’évaluation réalisée par un professionnel de santé.
                     file_name="conseils.pdf",
                     mime="application/pdf"
                 )
-    
-st.header("Langage Pas à Pas")
 
-st.write("Bienvenue dans le programme")
+# =========================
+# INTERFACE PRO
+# =========================
+
+st.set_page_config(page_title="Langage Pas à Pas", layout="wide")
+
+st.markdown("""
+<style>
+.stApp {
+    background-color: #fffaf7;
+}
+h1, h2, h3 {
+    color: #5c4b51;
+}
+.stButton>button {
+    background-color: #f8c8dc;
+    color: black;
+    border-radius: 10px;
+    padding: 10px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("# 🌸 Langage Pas à Pas")
+st.markdown("### Programme éducatif complet (Langage / Lecture / TDA)")
 
 niveau = st.selectbox("Choisir le niveau", ["léger", "modéré", "sévère"])
 
@@ -5440,25 +5462,23 @@ if st.button("Générer programme"):
 
     st.success("Programme généré ✔️")
 
-    st.markdown("## 🔤 Lettres et sons")
-    cols = st.columns(4)
+    tab1, tab2, tab3, tab4 = st.tabs(["🔤 Lettres", "🔡 Syllabes", "🧩 Mots", "🗣 Phrases"])
 
-    for i, lettre in enumerate(prog["lettres"]):
-        cols[i % 4].markdown(f"**{lettre['lettre']}** → {lettre['son']}")
+    with tab1:
+        st.subheader("Lettres et sons")
+        cols = st.columns(5)
+        for i, lettre in enumerate(prog["lettres"]):
+            cols[i % 5].markdown(f"**{lettre['lettre']}** → {lettre['son']}")
 
-    st.markdown("---")
+    with tab2:
+        st.subheader("Syllabes")
+        st.write(", ".join(prog["syllabes"]))
 
-    st.markdown("## 🔡 Syllabes")
-    st.write(", ".join(prog["syllabes"]))
+    with tab3:
+        st.subheader("Mots")
+        st.write(", ".join(prog["mots"]))
 
-    st.markdown("---")
-
-    st.markdown("## 🧩 Mots")
-    st.write(", ".join(prog["mots"]))
-
-    st.markdown("---")
-
-    st.markdown("## 🗣 Phrases")
-
-    for phrase in prog["phrases"]:
-        st.markdown(f"• {phrase}")
+    with tab4:
+        st.subheader("Phrases")
+        for phrase in prog["phrases"]:
+            st.markdown(f"• {phrase}")
